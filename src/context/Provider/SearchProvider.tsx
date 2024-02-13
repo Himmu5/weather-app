@@ -1,5 +1,5 @@
 "use client"
-import { FC, ReactNode } from 'react'
+import { FC, ReactNode, useState } from 'react'
 import { SearchContext } from '../context';
 
 type P = {
@@ -7,9 +7,11 @@ type P = {
 }
 
 const SearchProvider: FC<P> = ({ children }) => {
-  
-    return <SearchContext.Provider value={{}}
-        >
+    const [ queryText , setQueryText ] = useState("Delhi")
+    return <SearchContext.Provider value={{ 
+        queryText, 
+        setQueryText 
+    }}>
         {children}
     </SearchContext.Provider>
 }
