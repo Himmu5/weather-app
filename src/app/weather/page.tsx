@@ -27,7 +27,7 @@ const WeatherDetail: FC<P> = () => {
     }
     
     useEffect(()=>{
-        weatherByCityName(query).then((res)=>{
+        weatherByCityName(query!).then((res)=>{
             setData(res);
         })
     },[query])
@@ -56,7 +56,7 @@ const WeatherDetail: FC<P> = () => {
                     <p>{data?.location?.tz_id}</p>
                 </div>
                 <div className='flex items-center justify-between '>
-                    <p className="font-bold">Temperature</p>
+                    <p className="font-bold">Temperature(°C)</p>
                     <p>{data?.current?.temp_c}</p>
                 </div>
         </div>

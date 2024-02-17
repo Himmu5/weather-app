@@ -9,19 +9,20 @@ import { FC } from 'react'
 type P = {
     queryText: string
     setQueryText: (text: string) => void;
-    weatherData: Weather
+    weatherData: Weather;
+    loading: boolean;
 }
 
-const Weather: FC<P> = ({ queryText, setQueryText, weatherData }) => {
+const Weather: FC<P> = ({ queryText, setQueryText, weatherData, loading }) => {
 
-    if (!weatherData) {
+    if (loading) {
         return <>Loading...</>
     }
     return <div className="min-h-screen flex justify-center items-center">
         <div className="min-w-1/2 shadow-md border rounded-md flex flex-col p-3 " >
             <h1 className="text-base sm:text-3xl font-bold text-center p-4 ">Weather App</h1>
             <Input placeholder="Enter the location" value={queryText} onChange={(e) => setQueryText(e.target.value)} />
-            <div className='flex flex-col space-y-4 my-5'>
+            {weatherData ? <div className='flex flex-col space-y-4 my-5'>
                 <div className='flex items-center gap-1 justify-center font-bold'>
                     <p className='text-sm sm:text-xl md:text-2xl'>{weatherData?.location?.name}</p>
                     <Image src={"https:" + weatherData?.current?.condition?.icon} width={40} height={50} alt="weather" />
@@ -44,13 +45,15 @@ const Weather: FC<P> = ({ queryText, setQueryText, weatherData }) => {
                 </div>
                 <div>
                     <Link
-                        href={"/weather?query="+queryText}
+                        href={"/weather?query=" + queryText}
                         className='text-sm sm:text-base md:text-lg text-red-400 border w-fit p-1 rounded-md shadow-md self-center'
                     >
                         View details
                     </Link>
                 </div>
-            </div>
+            </div> :
+                <div className='m-4 text-center'>Data not found</div>
+            }
         </div>
     </div>
 }

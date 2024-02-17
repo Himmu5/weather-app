@@ -11,18 +11,28 @@ type P = {
 
 const SearchProvider: FC<P> = ({ children }) => {
     axios.defaults.baseURL = process.env.NEXT_PUBLIC_BASE_URL
-    const [ weatherData , setWeatherData ] = useState<Weather>()
-    const [ queryText , setQueryText ] = useState("Delhi")
+    const [weatherData, setWeatherData] = useState<Weather>()
+    const [queryText, setQueryText] = useState("Delhi")
+    const [loading, setLoading] = useState(false)
 
-    useEffect(()=>{
-        weatherByCityName(queryText).then((res)=>{
+    useEffect(() => {
+        const delayInMilliseconds = 2000; // 2 seconds
+        setTimeout(()=>{
+            setLoading(true);
+        weatherByCityName(queryText).then((res) => {
             setWeatherData(res);
+            setLoading(false)
+        }).catch(() => {
+            setLoading(false)
         })
-    },[queryText])
-    return <SearchContext.Provider value={{ 
+        }, delayInMilliseconds);
+    }, [queryText])
+    
+    return <SearchContext.Provider value={{
         weatherData,
-        queryText, 
-        setQueryText 
+        queryText,
+        setQueryText,
+        loading
     }}>
         {children}
     </SearchContext.Provider>
