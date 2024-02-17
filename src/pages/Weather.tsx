@@ -3,6 +3,7 @@ import Input from '@/components/Input';
 import { withSearch } from '@/context/hoc/withProvider';
 import { Weather } from '@/typing/weather';
 import Image from 'next/image';
+import Link from 'next/link';
 import { FC } from 'react'
 
 type P = {
@@ -20,7 +21,6 @@ const Weather: FC<P> = ({ queryText, setQueryText, weatherData }) => {
         <div className="min-w-1/2 shadow-md border rounded-md flex flex-col p-3 " >
             <h1 className="text-base sm:text-3xl font-bold text-center p-4 ">Weather App</h1>
             <Input placeholder="Enter the location" value={queryText} onChange={(e) => setQueryText(e.target.value)} />
-
             <div className='flex flex-col space-y-4 my-5'>
                 <div className='flex items-center gap-1 justify-center font-bold'>
                     <p className='text-sm sm:text-xl md:text-2xl'>{weatherData?.location?.name}</p>
@@ -42,12 +42,15 @@ const Weather: FC<P> = ({ queryText, setQueryText, weatherData }) => {
                     <p>Time zone </p>
                     <p>{weatherData?.location?.tz_id}</p>
                 </div>
-                <div className='text-sm sm:text-base md:text-lg text-red-400 border w-fit p-1 rounded-md shadow-md self-center'
-                >
-                    View detail
+                <div>
+                    <Link
+                        href={"/weather?query="+queryText}
+                        className='text-sm sm:text-base md:text-lg text-red-400 border w-fit p-1 rounded-md shadow-md self-center'
+                    >
+                        View details
+                    </Link>
                 </div>
             </div>
-
         </div>
     </div>
 }
