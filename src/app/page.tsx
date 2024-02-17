@@ -1,5 +1,5 @@
 import SearchProvider from "@/context/Provider/SearchProvider";
-import Weather from "@/pages/Weather";
+import Weather from "@/app/weather/Weather";
 
 export default function Home() {
 
